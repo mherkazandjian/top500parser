@@ -114,8 +114,8 @@ def find_entries_in_top_500_list_page(base_url, page_url):
         systems_info[system_rank] = system_info
         # if system_index == 1:
         #     break
+        time.sleep(1.0)
 
-    time.sleep(1.0)
     return systems_info
 
 
