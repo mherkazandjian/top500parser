@@ -39,11 +39,11 @@ class MyFormatter(logging.Formatter):
         :param datefmt: the date time format
         :return:
         """
-        ct = self.converter(record.created)
+        curr_time = self.converter(record.created)
         if datefmt:
-            t_str = ct.strftime(datefmt)
+            t_str = curr_time.strftime(datefmt)
         else:
-            t_str = ct.strftime("%Y-%m-%d %H:%M:%S")
+            t_str = curr_time.strftime("%Y-%m-%d %H:%M:%S")
             t_str = "{},{:03d}".format(t_str, int(record.msecs))
         return t_str
 
@@ -52,7 +52,7 @@ class Fetcher(object):
     """
     Fetch the raw systems data of the top 500 list of HPC systems
     """
-    def __init__(self, base_url: str='https://www.top500.org'):
+    def __init__(self, base_url: str = 'https://www.top500.org'):
         """
         Constructor
 
@@ -164,7 +164,7 @@ class Fetcher(object):
         )
 
         systems_info = {}
-        for system_index, system_tag in enumerate(system_tags):
+        for system_tag in system_tags:
             system_url = f"{self.base_url}{system_tag['href']}"
             system_rank, system_info = self.fetch_system_details(system_url)
             systems_info[system_rank] = system_info
