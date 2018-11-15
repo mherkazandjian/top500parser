@@ -12,23 +12,32 @@ In this script all the lists unqie operating systems are collected and printed
 <seealso>
 </seealso>
 """
-import os
 import pickle
 
 # load the data of all the releases
-fname = os.path.expanduser('~/tmp/top500.pkl')
-with open(fname, 'rb') as fobj:
+with open('top500.pkl', 'rb') as fobj:
     all_release_info = pickle.load(fobj)
 
 
 # collect the OSes into a set and then print them
 unique_oses = set()
+all_oses = []
 for release_date, release_info in all_release_info.items():
     print(f'release {release_date}')
     for system_rank, system_info in release_info.items():
         print(f"\trank = {system_rank} os = {system_info['Operating System']}")
         unique_oses.add(system_info['Operating System'])
+        all_oses.append(system_info['Operating System'])
 
 print('-------------- unique oses -------------------')
-for _os in unique_oses:
-    print(_os)
+
+print('windows OSes')
+n_windows = 0
+for _os in all_oses:
+    __os = _os.lower()
+    if 'win' in __os or 'microsoft' in __os:
+        print('\t', _os.lower())
+        n_windows += 1
+
+print(f'found {n_windows} systems')
+print('windows os = {:.3f}%'.format(100.0*n_windows / len(all_oses)))
